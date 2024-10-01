@@ -287,18 +287,27 @@ animations = [{
 radius = 6.0
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 5
+collision_layer = 2
 script = ExtResource("1_ciyy4")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, 5)
 zoom = Vector2(4, 4)
+limit_bottom = 300
+limit_smoothed = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_pty2w")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.977346
+frame_progress = 0.909048
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_hiatq")
+
+[node name="RayCastLadder" type="RayCast2D" parent="."]
+position = Vector2(0, 5)
+target_position = Vector2(0, -10)
+collision_mask = 2
