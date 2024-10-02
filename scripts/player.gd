@@ -40,7 +40,7 @@ func _idle_and_move(delta):
 		animated_sprite.flip_h = true
 
 #爬梯子
-func _ladder_climb(delta):
+func _ladder_climb(_delta):
 	print("_ladder_climb")
 	var direction = Vector2.ZERO
 	direction.x = Input.get_axis("move_left", "move_right")

@@ -1,7 +1,8 @@
-[gd_scene load_steps=41 format=3 uid="uid://dt0mytj8jtnov"]
+[gd_scene load_steps=45 format=3 uid="uid://dt0mytj8jtnov"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_ciyy4"]
 [ext_resource type="Texture2D" uid="uid://b8cmjj8vq3r8d" path="res://assets/sprites/knight.png" id="1_vavmu"]
+[ext_resource type="AudioStream" uid="uid://d3ga5iqgco704" path="res://assets/sounds/hurt.wav" id="3_g21c5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mx8n7"]
 atlas = ExtResource("1_vavmu")
@@ -286,6 +287,66 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_hiatq"]
 radius = 6.0
 
+[sub_resource type="Animation" id="Animation_pprf8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_a7qty"]
+resource_name = "hurt"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7t3vw"]
+_data = {
+"RESET": SubResource("Animation_pprf8"),
+"hurt": SubResource("Animation_a7qty")
+}
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
 collision_layer = 2
@@ -301,7 +362,6 @@ limit_smoothed = true
 sprite_frames = SubResource("SpriteFrames_pty2w")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.909048
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 5)
@@ -311,3 +371,11 @@ shape = SubResource("CircleShape2D_hiatq")
 position = Vector2(0, 5)
 target_position = Vector2(0, -10)
 collision_mask = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7t3vw")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_g21c5")
